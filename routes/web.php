@@ -17,6 +17,10 @@ Route::get('/sign_in.html', function () {
     return view('sign_in');
 });
 
+Route::get('/register.html', function () {
+    return view('register');
+});
+
 Route::get('/index.html', function () {
     return view('index');
 });
@@ -52,3 +56,13 @@ Route::get('/e-ticket.html', function () {
 });
 
 
+
+
+Route::group(['prefix' => 'user'], function(){ 
+    Route::get('/login', [AuthController::class, 'getLogin'])->name('login');
+     Route::post('/login', [AuthController::class, 'postLogin']); 
+     Route::get('/register', [AuthController::class, 'getRegister'])->name('register');
+     Route::post('/register', [AuthController::class, 'postRegister']); 
+    });
+    Route::get('logout', [AuthController::class, 'getLogout'
+]);
