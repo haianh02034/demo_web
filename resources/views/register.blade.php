@@ -10,6 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/style-starter.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/sign-in.css') }}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
@@ -21,6 +22,7 @@
 							aria-hidden="true"></span>
 							Cinema A </a></h1>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					
 				</div>
 				<div class="Login_SignUp" id="login_s">
 					<!-- style="font-size: 2rem ; display: inline-block; position: relative;" -->
@@ -48,13 +50,14 @@
 
 	<div class="container_signup_signin right-panel-active" id="container_signup_signin">
 		<div class="form-container sign-up-container">
-			<form name="sign-up-form" action="#" onsubmit="return signUpValidateForm()"
+			<form name="sign-up-form" onsubmit="return signUpValidateForm()"
 			 action="{{ route('register') }}" method="POST" class="register-form" id="register-form" onsubmit="return validateForm();"
 			>
 				<h1>Create Account</h1>
+				
 				<div class="social-container">
 					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+					<a href="{{url('auth/google')}}" class="social" style="color: var(--theme-title);"><i class="fab fa-google-plus-g"></i></a>
 					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 				</div>
 				<span>or use your email for registration</span>
@@ -97,6 +100,8 @@
 			</div>
 		</div>
 	</div>
+
+	@include('errors.note')
 
 	<script src="{{ asset('assets/js/as-alert-message.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>

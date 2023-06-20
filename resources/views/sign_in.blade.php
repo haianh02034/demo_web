@@ -10,6 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/style-starter.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/sign-in.css') }}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
 <body>
@@ -63,14 +64,15 @@
 			</form> --}}
 		</div>
 		<div class="form-container sign-in-container">
-			<form name="sign-in-form" style="color: var(--theme-title);" action="#" onsubmit="return signInValidateForm()"   
+			<form name="sign-in-form" style="color: var(--theme-title);" onsubmit="return signInValidateForm()"   
 			action="{{ route('login') }}" method="POST" 
 			>
 				<h1>Sign in</h1>
+				
 				<div class="social-container">
 					<a href="#" class="social" style="color: var(--theme-title);"><i class="fab fa-facebook-f"></i></a>
-					<a href="#" class="social" style="color: var(--theme-title);"><i
-							class="fab fa-google-plus-g"></i></a>
+					<a href="{{url('auth/google')}}" class="social" style="color: var(--theme-title);"><i class="fab fa-google-plus-g"></i></a>
+					{{-- <a href="{{url('auth/google')}}" class="btn btn-secondary">{{__('Google Sign in')}}</a> --}}
 					<a href="#" class="social" style="color: var(--theme-title);"><i class="fab fa-linkedin-in"></i></a>
 				</div>
 				<span>or use your account</span>
@@ -100,7 +102,7 @@
 			</div>
 		</div>
 	</div>
-
+	@include('errors.note')
 	<script src="{{ asset('assets/js/as-alert-message.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
 	<!--/theme-change-->

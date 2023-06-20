@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,11 +59,17 @@ Route::get('/e-ticket.html', function () {
 
 
 
-Route::group(['prefix' => 'user'], function(){ 
-    Route::get('/login', [AuthController::class, 'getLogin'])->name('login');
-     Route::post('/login', [AuthController::class, 'postLogin']); 
-     Route::get('/register', [AuthController::class, 'getRegister'])->name('register');
-     Route::post('/register', [AuthController::class, 'postRegister']); 
-    });
+
+    Route::get('/sign_in.html', [AuthController::class, 'getLogin'])->name('login');
+     Route::post('/sign_in.html', [AuthController::class, 'postLogin']); 
+     Route::get('/register.html', [AuthController::class, 'getRegister'])->name('register');
+     Route::post('/register.html', [AuthController::class, 'postRegister']); 
+
     Route::get('logout', [AuthController::class, 'getLogout'
 ]);
+
+
+
+Route::get('/login', [AuthController::class, 'login']);
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
