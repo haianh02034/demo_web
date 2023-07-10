@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,6 +26,7 @@ Route::get('/register.html', function () {
 Route::get('/index.html', function () {
     return view('index');
 });
+Route::get('/index.html', [HomeController::class, 'index'])->name('index');
 
 
 Route::get('/movies.html', function () {
@@ -52,14 +54,13 @@ Route::get('/e-ticket.html', function () {
     return view('e-ticket');
 });
 
-Route::get('/e-ticket.html', function () {
-    return view('admin/alerts/');
+// Route::get('/e-ticket.html', function () {
+//     return view('admin/alerts/');
+// });
+
+Route::get('/admin', function () {
+    return view('admin/users/index');
 });
-
-
-
-
-
     Route::get('/sign_in.html', [AuthController::class, 'getLogin'])->name('login');
      Route::post('/sign_in.html', [AuthController::class, 'postLogin']); 
      Route::get('/register.html', [AuthController::class, 'getRegister'])->name('register');
@@ -73,3 +74,7 @@ Route::get('/e-ticket.html', function () {
 Route::get('/login', [AuthController::class, 'login']);
 Route::get('/auth/google', [AuthController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+
+// Route hiển thị và cập nhật thông tin cá nhân
+Route::get('/profile', [AuthController::class, 'showProfile'])->name('profile');
+Route::post('/profile/update', [AuthController::class, 'updateProfile'])->name('profile.update');

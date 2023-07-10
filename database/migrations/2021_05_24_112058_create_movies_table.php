@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('National_production');
             $table->string('time');
             $table->string('movie_photo');
-            $table->integer('language');
+            $table->string('language');
             $table->timestamps();
         });
     }

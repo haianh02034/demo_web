@@ -11,17 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            // $table->increments('id');
-            // $table->string('provider_name')->nullable()->after('id');
-            // $table->string('provider_id')->nullable()->after('id');
-            // $table->string('name');
-            // $table->string('email')->unique();
-            // $table->string('password')->nullable()->change();
-            // $table->string('avatar')->nullable();
-            // $table->enum('role', ['admin', 'user'])->default('user');
-            // $table->rememberToken();
-            // $table->timestamps();      
+        Schema::create('users', function (Blueprint $table) {      
             $table->increments('id');
             $table->string('provider_name')->nullable();
             $table->string('provider_id')->nullable();
@@ -31,8 +21,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->enum('role', ['admin', 'user'])->default('user');
             $table->rememberToken();
-            $table->timestamps();
-            
+            $table->timestamps(); 
         });
     }
 

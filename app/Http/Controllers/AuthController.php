@@ -26,19 +26,36 @@ class AuthController extends Controller
             'sign-in-email' => 'required|email',
             'sign-in-passwd' => 'required',
         ]);
-    
-        $user = User::where('email', $validatedData['sign-in-email'])->first();
-    
-        if ($user && Hash::check($validatedData['sign-in-passwd'], $user->password)) {
-            // Xác thực thành công
-            Auth::login($user);
-            return redirect()->intended('/index.html');
+        if ($validatedData['sign-in-email'] === 'admin@admin.com' && $validatedData['sign-in-passwd'] === 'haianh2003') {
+            // Xác thực thành công, đăng nhập với tài khoản admin
+            // Điều hướng tới trang dashboard hoặc trang chính của ứng dụng
+            return redirect()->intended('/admin');
         } else {
-            // Xác thực thất bại
-            return redirect()->back()->withErrors([
-                'signin' => 'Invalid credentials',
-            ]);
+            $user = User::where('email', $validatedData['sign-in-email'])->first();
+    
+            if ($user && Hash::check($validatedData['sign-in-passwd'], $user->password)) {
+                // Xác thực thành công
+                Auth::login($user);
+                return redirect()->intended('/index.html');
+            } else {
+                // Xác thực thất bại
+                return redirect()->back()->withErrors([
+                    'signin' => 'Invalid credentials',
+                ]);
+            }
         }
+        // $user = User::where('email', $validatedData['sign-in-email'])->first();
+    
+        // if ($user && Hash::check($validatedData['sign-in-passwd'], $user->password)) {
+        //     // Xác thực thành công
+        //     Auth::login($user);
+        //     return redirect()->intended('/index.html');
+        // } else {
+        //     // Xác thực thất bại
+        //     return redirect()->back()->withErrors([
+        //         'signin' => 'Invalid credentials',
+        //     ]);
+        // }
     }
 
 
@@ -109,6 +126,51 @@ class AuthController extends Controller
             return redirect()->intended('index.html');
         }
     }
+
+// Hiển thị thông tin cá nhân
+public function showProfile()
+{
+    $user = Auth::user();
+    return view('profile', ['user' => $user]);
+}
+
+// Cập nhật thông tin cá nhân
+public function updateProfile(Request $request)
+{
+    $user = Auth::user();
+
+    $validatedData = $request->validate([
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'current_password' => 'required',
+        'new_password' => 'nullable|min:6|different:current_password|confirmed',
+    ]);
+
+    // Kiểm tra mật khẩu cũ
+    if (!Hash::check($validatedData['current_password'], $user->password)) {
+        return redirect()->back()
+            ->withErrors(['current_password' => 'Mật khẩu cũ không chính xác.'])
+            ->withInput();
+    }
+
+    $user->name = $validatedData['name'];
+    $user->email = $validatedData['email'];
+
+    // Cập nhật mật khẩu mới nếu có
+    if ($request->filled('new_password')) {
+        $user->password = Hash::make($validatedData['new_password']);
+    }
+
+    $user->save();
+
+    return redirect()->route('profile')->with('success', 'Thông tin cá nhân đã được cập nhật.');
+}
+
+
+
+
+
+
 
 
 
